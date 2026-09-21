@@ -10,6 +10,27 @@ backend by default (no API key needed), or against a real LLM if you set one.
 
 ![demo](demo.gif)
 
+## Architecture
+
+```mermaid
+flowchart TD
+    E([Inventory event]) --> T[Triage agent<br/>classify + route]
+    T -->|analyze / expedite| S[Stock analysis agent<br/>forecast demand<br/>reorder point · safety stock · EOQ]
+    T -->|no action| X([End])
+    S --> P[Purchase agent<br/>propose order quantity]
+    P --> G{Guardrail engine<br/>budget · capacity · per-order cap<br/>per-SKU value · MOQ · duplicate PO}
+    G -->|passes| A[Approve PO]
+    G -->|too big| C[Clamp to safe value]
+    G -->|breaks a hard rule| R[Reject]
+    A --> L[(Audit log + SQLite)]
+    C --> L
+    R --> L
+```
+
+The agents never do the arithmetic and are never trusted with safety: the numbers
+come from the forecasting/optimization modules, and every proposed order must
+pass the guardrail engine before it can become a real purchase order.
+
 ## How it works
 
 Three agents run as a LangGraph workflow:
