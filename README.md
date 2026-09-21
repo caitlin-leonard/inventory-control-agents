@@ -8,7 +8,7 @@ budget, or overflow the warehouse.
 Built with LangGraph. The LLM is pluggable: it runs offline with a deterministic
 backend by default (no API key needed), or against a real LLM if you set one.
 
-![demo](demo.gif)
+![demo](assets/demo.gif)
 
 ## Screenshots
 
@@ -18,19 +18,25 @@ backend by default (no API key needed), or against a real LLM if you set one.
 
 ## Architecture
 
-```mermaid
-flowchart TD
-    E([Inventory event]) --> T[Triage agent<br/>classify + route]
-    T -->|analyze / expedite| S[Stock analysis agent<br/>forecast demand<br/>reorder point · safety stock · EOQ]
-    T -->|no action| X([End])
-    S --> P[Purchase agent<br/>propose order quantity]
-    P --> G{Guardrail engine<br/>budget · capacity · per-order cap<br/>per-SKU value · MOQ · duplicate PO}
-    G -->|passes| A[Approve PO]
-    G -->|too big| C[Clamp to safe value]
-    G -->|breaks a hard rule| R[Reject]
-    A --> L[(Audit log + SQLite)]
-    C --> L
-    R --> L
+```
+   Inventory event
+         |
+         v
+   [ Triage agent ]  classify + route
+         |
+         |  analyze / expedite
+         v
+   [ Stock analysis agent ]  forecast demand -> reorder point, safety stock, EOQ
+         |
+         v
+   [ Purchase agent ]  propose order quantity
+         |
+         v
+   { Guardrail engine }  budget | capacity | per-order cap | per-SKU value | MOQ | duplicate PO
+         |
+         +--> pass          -> approve PO ---+
+         +--> too big        -> clamp to safe -+--> audit log + SQLite
+         +--> breaks a rule  -> reject --------+
 ```
 
 The agents never do the arithmetic and are never trusted with safety: the numbers
