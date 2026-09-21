@@ -1,0 +1,10 @@
+langgraph>=1.0
+langchain-core>=1.0
+pydantic>=2.5
+fastapi>=0.110
+uvicorn>=0.27
+streamlit>=1.30
+pandas>=2.0
+pytest>=8.0
+# Optional — only needed for the real-LLM backend (LLM_PROVIDER=openai):
+# langchain-openai>=0.2

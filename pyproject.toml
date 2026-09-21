@@ -1,0 +1,25 @@
+[project]
+name = "inventory-control-agents"
+version = "0.1.0"
+description = "A guardrailed multi-agent inventory-control system built on LangGraph."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "langgraph>=1.0",
+    "langchain-core>=1.0",
+    "pydantic>=2.5",
+    "fastapi>=0.110",
+    "uvicorn>=0.27",
+]
+
+[project.optional-dependencies]
+dashboard = ["streamlit>=1.30", "pandas>=2.0"]
+llm = ["langchain-openai>=0.2"]
+dev = ["pytest>=8.0"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
