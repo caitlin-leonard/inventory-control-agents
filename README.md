@@ -1,4 +1,4 @@
-# Inventory Control Agents
+# StockPilot.AI : Inventory Control Agents
 
 A multi-agent system that decides inventory restocking. It reads demand and stock
 levels, forecasts what's needed, and generates purchase orders — but every order
