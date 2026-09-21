@@ -8,7 +8,9 @@ budget, or overflow the warehouse.
 Built with LangGraph. The LLM is pluggable: it runs offline with a deterministic
 backend by default (no API key needed), or against a real LLM if you set one.
 
-![demo](assets/demo.gif)
+![Dashboard](assets/image1.png)
+
+![Purchase decisions with guardrails firing](assets/image2.png)
 
 ## How it works
 
