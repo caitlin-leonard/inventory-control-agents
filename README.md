@@ -10,6 +10,12 @@ backend by default (no API key needed), or against a real LLM if you set one.
 
 ![demo](demo.gif)
 
+## Screenshots
+
+| Control tower | Guardrails firing |
+|:---:|:---:|
+| ![Dashboard](assets/image1.png) | ![Purchase decisions](assets/image2.png) |
+
 ## Architecture
 
 ```mermaid
